@@ -248,25 +248,9 @@ phate <- function(data, ndim = 2, knn = 5,
                               verbose = verbose,
                               ...)
   }
-  embedding <- operator$fit_transform(data,
-                                      t_max = t.max)
-  colnames(embedding) <- paste0("PHATE", 1:ncol(embedding))
-  rownames(embedding) <- rownames(data)
-  if (plot.optimal.t) {
-    out <- operator$von_neumann_entropy(t_max = t.max)
-    t <- out[[1]]
-    h <- out[[2]]
-    t.opt <- pyphate()$vne$find_knee_point(h, t)
-    graphics::plot(t, h,
-                   type = "l",
-                   xlab = "t", ylab = "Von Neumann Entropy",
-                   main = paste0("Optimal t = ", t.opt))
-    graphics::points(t.opt, h[which(t == t.opt)], pch = "*", cex = 3)
-  }
-  result <- list("embedding" = embedding, "operator" = operator,
-                 "params" = params)
-  class(result) <- c("phate", "list")
-  return(result)
+  
+  operator$fit
+  return(operator$diff_potential(t_max=t.max))
 }
 
 #' Plot a PHATE object in base R
