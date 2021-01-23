@@ -249,7 +249,7 @@ phate <- function(data, ndim = 2, knn = 5,
                               ...)
   }
   
-  operator$fit
+  operator$fit(data)
   return(operator$diff_potential(t_max=t.max))
 }
 
