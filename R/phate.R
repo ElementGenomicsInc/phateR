@@ -250,7 +250,12 @@ phate <- function(data, ndim = 2, knn = 5,
   }
   
   operator$fit(data)
-  return(operator$calculate_potential(t_max=t.max))
+  dists = operator$diff_potential
+  print(dim(dists))
+  print(dim(data))
+  rownames(dists) = rownames(data)
+  colnames(dists) = rownames(data)
+  return(dists)
 }
 
 #' Plot a PHATE object in base R
